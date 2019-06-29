@@ -22,8 +22,8 @@ primary key (id)
 
 create table employees (
 id integer not null auto_increment,
-e_name varchar(100) not null,
-pswd varchar(255) default null,
+text varchar(100) not null,
+password varchar(255) default null,
 salary int,
 avg_score integer,
 is_manager BOOLEAN DEFAULT false,
