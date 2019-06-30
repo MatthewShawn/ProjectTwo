@@ -24,7 +24,7 @@ module.exports = function(sequelize, DataTypes) {
 
         Job_skills.belongsTo(models.Skill_data, {
             foreignKey: "id",
-            as: "the_skill",
+            as: "skill_data_id",
             allowNull: false
         });
     };
