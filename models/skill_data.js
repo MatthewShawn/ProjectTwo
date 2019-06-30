@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     var Skill_data = sequelize.define("Skill_data", {
-        freeseTableName: true,
+        freezeTableName: true,
         // Giving the Author model a name of type STRING
         d_title: {
             type: DataTypes.STRING,
