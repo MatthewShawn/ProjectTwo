@@ -48,27 +48,27 @@ primary key (id)
 
 create table emp_skills (
 id integer not null auto_increment,
-employee int,
-reviewer int,
-the_skill int,
+employees_id int,
+reviewer_id int,
+skill_data_id int,
 current_level int,
 created_at TIMESTAMP NULL DEFAULT current_timestamp,
 updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id),
-foreign key (employee) references employees(id),
-foreign key (reviewer) references employees(id),
-foreign key (the_skill) references skill_data(id)
+foreign key (employees_id) references employees(id),
+foreign key (reviewer_id) references employees(id),
+foreign key (skill_data_id) references skill_data(id)
 );
 
 create table job_skills (
 id integer not null auto_increment,
 min_level_required int,
 role_id int,
-the_skill int,
+skill_data_id int,
 created_at TIMESTAMP NULL DEFAULT current_timestamp,
 updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id),
 foreign key (role_id) references role(id),
-foreign key (the_skill) references skill_data(id)
+foreign key (skill_data_id) references skill_data(id)
 );
 
