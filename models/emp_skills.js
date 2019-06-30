@@ -7,7 +7,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
             len: [1]
         }
-    }, { freezeTableName: true });
+    }, {
+        freezeTableName: true,
+        underscored: true,
+        timestamp: false
+    });
 
     Emp_skills.associate = function(models) {
         // We're saying that an Employee skill belongs to an Employee at a specific

@@ -20,7 +20,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             isFloat: true
         }
-    }, { freezeTableName: true });
+    }, {
+        freezeTableName: true,
+        underscored: true,
+        timestamp: false
+    });
 
     Roles.associate = function(models) {
         // Associating Roles with Employees and Job_skills

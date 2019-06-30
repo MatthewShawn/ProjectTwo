@@ -6,7 +6,11 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true,
             len: [1]
         }
-    }, { freezeTableName: true });
+    }, {
+        freezeTableName: true,
+        underscored: true,
+        timestamp: false
+    });
 
     Job_skills.associate = function(models) {
         // We're saying that a Job_skills should belong to an Roles and Skill_data

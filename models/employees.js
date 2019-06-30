@@ -31,7 +31,11 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: false,
             len: [1]
         }
-    }, { freezeTableName: true });
+    }, {
+        freezeTableName: true,
+        underscored: true,
+        timestamp: false
+    });
 
     Employees.associate = function(models) {
         // We're saying that an Employee should belong to a Role, and that
