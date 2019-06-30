@@ -65,13 +65,13 @@ module.exports = function(app) {
   });
 
   //find all employees with a specific job title.  (using the roles database)
-  app.get("/api/employees/:r_title", function(req, res) {
-    db.Employees.findAll({
+  app.get("/api/role/:r_title", function(req, res) {
+    db.Role.findAll({
       where: {
         r_title: req.params.r_title
       }
-    }).then(function(dbEmployees) {
-      res.json(dbEmployees);
+    }).then(function(dbRole) {
+      res.json(dbRole);
     });
   });
   //add new employees object deconstructuring
