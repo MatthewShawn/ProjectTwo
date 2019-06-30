@@ -26,7 +26,8 @@ module.exports = function(sequelize, DataTypes) {
         },
         is_manager: {
             type: DataTypes.BOOLEAN,
-            allowNull: true,
+            allowNull: false,
+            defaultValue: false,
             len: [1]
         }
     });

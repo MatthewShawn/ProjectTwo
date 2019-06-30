@@ -3,6 +3,7 @@ module.exports = function(sequelize, DataTypes) {
         // Giving the Roles model a title of type STRING, a low and high salary of type integer
         r_title: {
             type: DataTypes.STRING,
+            unique: true,
             allowNull: false,
             validate: {
                 len: [1]

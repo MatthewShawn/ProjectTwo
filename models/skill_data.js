@@ -1,7 +1,10 @@
 module.exports = function(sequelize, DataTypes) {
     var Skill_data = sequelize.define("skill_data", {
         // Giving the Author model a name of type STRING
-        d_title: DataTypes.STRING,
+        d_title: {
+            type: DataTypes.STRING,
+            unique: true
+        },
         d_desc: DataTypes.TEXT
     });
 
