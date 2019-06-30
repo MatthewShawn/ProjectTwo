@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     var Job_skills = sequelize.define("Job_skills", {
-        freeseTableName: true,
+        freezeTableName: true,
         min_level_required: {
             type: DataTypes.INTEGER,
             allowNull: true,
