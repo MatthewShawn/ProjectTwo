@@ -1,6 +1,7 @@
 module.exports = function(sequelize, DataTypes) {
-    var Emp_skills = sequelize.define("emp_skills", {
+    var Emp_skills = sequelize.define("Emp_skills", {
 
+        freezeTableName: true,
         current_level: {
             type: DataTypes.INTEGER,
             allowNull: true,
@@ -13,17 +14,22 @@ module.exports = function(sequelize, DataTypes) {
         // level, and that it must have a skill data defined that can exist for other
         // Emp_skills and Job_skills
 
+
         Emp_skills.belongsTo(models.Employees, {
-            foreignKey: {
-                allowNull: false
-            }
+
+            foreignKey: "id",
+            as: "employee",
+            allowNull: false
+
         });
         Emp_skills.belongsTo(models.Skill_data, {
-            foreignKey: {
-                allowNull: false
-            }
+
+            foreignKey: "id",
+            as: "the_skill",
+            allowNull: false
+
         });
     };
 
-    return Post;
+    return Emp_skills;
 };
