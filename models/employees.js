@@ -2,70 +2,68 @@
 var bcrypt = require("bcryptjs");
 // Creating our User model
 module.exports = function(sequelize, DataTypes) {
-  var Employees = sequelize.define(
-    "Employees",
-    {
-      // The email cannot be null, and must be a proper email before creation
-      text: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-      },
-      // The password cannot be null
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      salary: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        len: [1]
-      },
-      avg_score: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        len: [1]
-      },
-      is_manager: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-        len: [1]
-      }
-    },
-    {
-      freezeTableName: true,
-      underscored: true
-    }
-  );
-
-  Employees.associate = function(models) {
-    // We're saying that an Employee should belong to a Role, and that
-    // other Employees can have the same Role definition.
-
-    Employees.belongsTo(models.Roles, {
-      foreignKey: "id",
-      as: "job_role",
-      allowNull: false
-    });
-
-    // An Employee can have many Emp_skills.
-    Employees.hasMany(models.Emp_skills, {
-      //onDelete: "cascade"
-    });
-  };
-  // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
-  Employees.prototype.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
-  };
-  // Hooks are automatic methods that run during various phases of the User Model lifecycle
-  // In this case, before a User is created, we will automatically hash their password
-  Employees.addHook("beforeCreate", function(user) {
-    user.password = bcrypt.hashSync(
-      user.password,
-      bcrypt.genSaltSync(10),
-      null
+    var Employees = sequelize.define(
+        "Employees", {
+            // The email cannot be null, and must be a proper email before creation
+            text: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                unique: true
+            },
+            // The password cannot be null
+            password: {
+                type: DataTypes.STRING,
+                allowNull: false
+            },
+            salary: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                len: [1]
+            },
+            avg_score: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                len: [1]
+            },
+            is_manager: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+                defaultValue: false,
+                len: [1]
+            }
+        }, {
+            freezeTableName: true,
+            underscored: true
+        }
     );
-  });
-  return Employees;
+
+    Employees.associate = function(models) {
+        // We're saying that an Employee should belong to a Role, and that
+        // other Employees can have the same Role definition.
+
+        Employees.belongsTo(models.Role, {
+            foreignKey: "id",
+            as: "role_id",
+            allowNull: false
+        });
+
+        // An Employee can have many Emp_skills.
+        Employees.hasMany(models.Emp_skills, {
+            //onDelete: "cascade"
+        });
+    };
+    // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
+    Employees.prototype.validPassword = function(password) {
+        return bcrypt.compareSync(password, this.password);
+    };
+    // Hooks are automatic methods that run during various phases of the User Model lifecycle
+    // In this case, before a User is created, we will automatically hash their password
+    Employees.addHook("beforeCreate", function(user) {
+        user.password = bcrypt.hashSync(
+            user.password,
+            bcrypt.genSaltSync(10),
+            null
+        );
+    });
+    return Employees;
 };
