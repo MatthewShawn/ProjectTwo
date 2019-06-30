@@ -1,12 +1,12 @@
 module.exports = function(sequelize, DataTypes) {
     var Job_skills = sequelize.define("Job_skills", {
-        freezeTableName: true,
+
         min_level_required: {
             type: DataTypes.INTEGER,
             allowNull: true,
             len: [1]
         }
-    });
+    }, { freezeTableName: true });
 
     Job_skills.associate = function(models) {
         // We're saying that a Job_skills should belong to an Roles and Skill_data

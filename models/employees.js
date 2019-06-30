@@ -3,7 +3,7 @@ var bcrypt = require("bcryptjs");
 // Creating our User model
 module.exports = function(sequelize, DataTypes) {
     var Employees = sequelize.define("Employees", {
-        freezeTableName: true,
+
         // The email cannot be null, and must be a proper email before creation
         text: {
             type: DataTypes.STRING,
@@ -31,7 +31,7 @@ module.exports = function(sequelize, DataTypes) {
             defaultValue: false,
             len: [1]
         }
-    });
+    }, { freezeTableName: true });
 
     Employees.associate = function(models) {
         // We're saying that an Employee should belong to a Role, and that

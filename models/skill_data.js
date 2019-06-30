@@ -1,13 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
     var Skill_data = sequelize.define("Skill_data", {
-        freezeTableName: true,
+
         // Giving the Author model a name of type STRING
         d_title: {
             type: DataTypes.STRING,
             unique: true
         },
         d_desc: DataTypes.TEXT
-    });
+    }, { freezeTableName: true });
 
     Skill_data.associate = function(models) {
         // Associating Author with Posts
