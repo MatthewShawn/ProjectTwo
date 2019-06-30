@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
     var Roles = sequelize.define("Roles", {
-        freezeTableName: true,
+
         // Giving the Roles model a title of type STRING, a low and high salary of type integer
         r_title: {
             type: DataTypes.STRING,
@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false,
             isFloat: true
         }
-    });
+    }, { freezeTableName: true });
 
     Roles.associate = function(models) {
         // Associating Roles with Employees and Job_skills

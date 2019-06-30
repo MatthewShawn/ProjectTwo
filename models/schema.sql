@@ -1,10 +1,3 @@
-SELECT `emp_skills`.`id`,
-    `emp_skills`.`employee`,
-    `emp_skills`.`reviewer`,
-    `emp_skills`.`the_skill`,
-    `emp_skills`.`current_level`
-FROM `perf_review`.`emp_skills`;
-
 
 DROP DATABASE IF EXISTS exampledb;
 CREATE DATABASE exampledb;

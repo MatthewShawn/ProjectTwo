@@ -1,13 +1,13 @@
 module.exports = function(sequelize, DataTypes) {
     var Emp_skills = sequelize.define("Emp_skills", {
 
-        freezeTableName: true,
+
         current_level: {
             type: DataTypes.INTEGER,
             allowNull: true,
             len: [1]
         }
-    });
+    }, { freezeTableName: true });
 
     Emp_skills.associate = function(models) {
         // We're saying that an Employee skill belongs to an Employee at a specific
