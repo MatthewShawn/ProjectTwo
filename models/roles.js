@@ -1,5 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
-    var Roles = sequelize.define("roles", {
+    var Roles = sequelize.define("Roles", {
+        freeseTableName: true,
         // Giving the Roles model a title of type STRING, a low and high salary of type integer
         r_title: {
             type: DataTypes.STRING,

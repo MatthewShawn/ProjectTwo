@@ -2,7 +2,8 @@
 var bcrypt = require("bcryptjs");
 // Creating our User model
 module.exports = function(sequelize, DataTypes) {
-    var Employees = sequelize.define("employees", {
+    var Employees = sequelize.define("Employees", {
+        freeseTableName: true,
         // The email cannot be null, and must be a proper email before creation
         text: {
             type: DataTypes.STRING,
@@ -34,11 +35,14 @@ module.exports = function(sequelize, DataTypes) {
     Employees.associate = function(models) {
         // We're saying that an Employee should belong to a Role, and that
         // other Employees can have the same Role definition.
+
+
         Employees.belongsTo(models.Roles, {
-            foreignKey: {
-                allowNull: false
-            }
+            foreignKey: "id",
+            as: "job_role",
+            allowNull: false
         });
+
         // An Employee can have many Emp_skills.
         Employees.hasMany(models.Emp_skills, {
             //onDelete: "cascade"
