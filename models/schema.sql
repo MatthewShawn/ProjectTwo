@@ -1,3 +1,11 @@
+SELECT `emp_skills`.`id`,
+    `emp_skills`.`employee`,
+    `emp_skills`.`reviewer`,
+    `emp_skills`.`the_skill`,
+    `emp_skills`.`current_level`
+FROM `perf_review`.`emp_skills`;
+
+
 DROP DATABASE IF EXISTS exampledb;
 CREATE DATABASE exampledb;
 
@@ -15,8 +23,8 @@ use perf_review;
 create table roles (
 id integer not null auto_increment,
 r_title varchar(150) not null,
-salary_low integer,
-salary_high integer,
+salary_low float,
+salary_high float,
 primary key (id)
 );
 

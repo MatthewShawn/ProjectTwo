@@ -11,14 +11,14 @@ module.exports = function(sequelize, DataTypes) {
             }
         },
         salary_low: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             allowNull: false,
-            len: [1]
+            isFloat: true
         },
         salary_high: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.FLOAT,
             allowNull: false,
-            len: [1]
+            isFloat: true
         }
     });
 
