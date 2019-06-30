@@ -66,12 +66,12 @@ module.exports = function(app) {
 
   //find all employees with a specific job title.  (using the roles database)
   app.get("/api/employees/:r_title", function(req, res) {
-    db.User.findAll({
+    db.Employees.findAll({
       where: {
         r_title: req.params.r_title
       }
-    }).then(function(dbUser) {
-      res.json(dbUser);
+    }).then(function(dbEmployees) {
+      res.json(dbEmployees);
     });
   });
   //add new employees object deconstructuring
@@ -86,27 +86,27 @@ module.exports = function(app) {
       is_manager,
       job_role
     };
-    db.User.create(newEmployee).then(function(dbUser) {
-      console.log(`New Employee added ${dbUser.e_name}`);
+    db.Employees.create(newEmployee).then(function(dbEmployees) {
+      console.log(`New Employee added ${dbEmployees.e_name}`);
       res.json({
-        id: dbUser.id
+        id: dbEmployees.id
       });
     });
   });
   //delete employees
   app.delete("/api/employees/:id", function(req, res) {
-    db.User.destroy({
+    db.Employees.destroy({
       where: {
         id: req.params.id
       }
-    }).then(function(dbUser) {
-      console.log(`Deleted Employee ${dbUser.e_name}`);
-      res.end(dbUser);
+    }).then(function(dbEmployees) {
+      console.log(`Deleted Employee ${dbEmployees.e_name}`);
+      res.end(dbEmployees);
     });
   });
   //update current employees
   app.put("/api/employees", function(req, res) {
-    db.User.update(
+    db.Employees.update(
       {
         e_name: req.body.e_name,
         pswd: req.body.pswd,
@@ -121,8 +121,8 @@ module.exports = function(app) {
         }
       }
     )
-      .then(function(dbUser) {
-        res.json(dbUser);
+      .then(function(dbEmployees) {
+        res.json(dbEmployees);
       })
       .catch(function(err) {
         res.json(err);
