@@ -13,13 +13,13 @@ CREATE DATABASE testdb;
 
 use perf_review;
 
-create table roles (
+create table role (
 id integer not null auto_increment,
 r_title varchar(150) not null,
 salary_low float,
 salary_high float,
-created_at TIMESTAMP NOT NULL,
-updated_at TIMESTAMP NOT NULL,
+created_at TIMESTAMP NULL DEFAULT current_timestamp,
+updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id)
 );
 
@@ -30,19 +30,19 @@ password varchar(255) default null,
 salary int,
 avg_score integer,
 is_manager BOOLEAN DEFAULT false,
-job_role int,
-created_at TIMESTAMP NOT NULL,
-updated_at TIMESTAMP NOT NULL,
+role_id int,
+created_at TIMESTAMP NULL DEFAULT current_timestamp,
+updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id),
-foreign key (job_role) references roles(id)
+foreign key (role_id) references role(id)
 );
 
 create table skill_data (
 id integer not null auto_increment,
 d_title varchar (150) not null,
 d_desc text,
-created_at TIMESTAMP NOT NULL,
-updated_at TIMESTAMP NOT NULL,
+created_at TIMESTAMP NULL DEFAULT current_timestamp,
+updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id)
 );
 
@@ -52,8 +52,8 @@ employee int,
 reviewer int,
 the_skill int,
 current_level int,
-created_at TIMESTAMP NOT NULL,
-updated_at TIMESTAMP NOT NULL,
+created_at TIMESTAMP NULL DEFAULT current_timestamp,
+updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id),
 foreign key (employee) references employees(id),
 foreign key (reviewer) references employees(id),
@@ -63,12 +63,12 @@ foreign key (the_skill) references skill_data(id)
 create table job_skills (
 id integer not null auto_increment,
 min_level_required int,
-job_for_this_level int,
+role_id int,
 the_skill int,
-created_at TIMESTAMP NOT NULL,
-updated_at TIMESTAMP NOT NULL,
+created_at TIMESTAMP NULL DEFAULT current_timestamp,
+updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id),
-foreign key (job_for_this_level) references roles(id),
+foreign key (role_id) references role(id),
 foreign key (the_skill) references skill_data(id)
 );
 
