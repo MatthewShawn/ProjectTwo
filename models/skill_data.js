@@ -7,7 +7,11 @@ module.exports = function(sequelize, DataTypes) {
             unique: true
         },
         d_desc: DataTypes.TEXT
-    }, { freezeTableName: true });
+    }, {
+        freezeTableName: true,
+        underscored: true,
+        timestamp: false
+    });
 
     Skill_data.associate = function(models) {
         // Associating Author with Posts
