@@ -1,3 +1,15 @@
 .list-group-item {
-  line-height: 2.5;
+	line-height: 2.5;
+}
+
+.box {
+	height: 200px;
+	width: 200px;
+	text-align: center;
+}
+.red {
+	background-color: red;
+}
+.green {
+	background-color: green;
 }
