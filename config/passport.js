@@ -8,7 +8,7 @@ passport.use(
   new LocalStrategy(
     // Our user will sign in with a "username"
     {
-      usernameField: "user name"
+      usernameField: "text"
     },
     function(text, password, done) {
       // When a user tries to sign in this code runs
