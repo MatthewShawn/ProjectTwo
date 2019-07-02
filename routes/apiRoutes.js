@@ -6,8 +6,10 @@ module.exports = function(app) {
   // If the employees has valid login credentials, send them to the members page.
   // Otherwise the employees will be sent an error
   app.post("/api/login", passport.authenticate("local"), function(req, res) {
-    console.log(req.employees);
-    res.json(req.employees);
+    if (req.user) {
+      console.log(req.user);
+    }
+    res.json(req.user);
   });
 
   // Route for signing up a employees. The employees's password is automatically hashed and stored securely thanks to
