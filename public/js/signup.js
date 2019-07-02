@@ -16,7 +16,7 @@ const SignUp = Vue.component("SignUp", {
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <h2>Sign Up Form</h2>
-        <form class="signup">
+        <form class="signup" v-on:submit.prevent="signUp">
           <div class="form-group">
             <label for="exampleInputEmail1">User Name</label>
             <input
@@ -56,55 +56,86 @@ const SignUp = Vue.component("SignUp", {
   </div>
   `,
 	data: {},
-	methods: {}
+	methods: {
+		signUp() {
+			var textInput = $("input#text-input");
+			var passwordInput = $("input#password-input");
+			var userData = {
+				text: textInput.val().trim(),
+				password: passwordInput.val().trim()
+			};
+
+			if (!userData.text || !userData.password) {
+				return;
+			}
+			// If we have an text and password, run the signUpUser function
+			this.$root.signUpUser(userData.text, userData.password);
+			textInput.val("");
+			passwordInput.val("");
+		}
+	}
 });
 
 const Vapp = new Vue({
 	el: "#app",
 	data: {},
-	methods: {}
+	methods: {
+		signUpUser(text, password) {
+			$.post("/api/signup", {
+				text: text,
+				password: password
+			})
+				.then(function(data) {
+					window.location.replace("/members");
+					// If there's an error, handle it by throwing up a bootstrap alert
+				})
+				.catch(this.handleLoginErr);
+		},
+		handleLoginErr(err) {
+			$("#alert .msg").text(err.responseJSON);
+			$("#alert").fadeIn(500);
+		}
+	}
 });
 
 //------------------- refactor this to Vue methods -----------------------
-$(document).ready(function() {
-	// Getting references to our form and input
-	var signUpForm = $("form.signup");
-	var textInput = $("input#text-input");
-	var passwordInput = $("input#password-input");
+// $(document).ready(function() {
+// 	// Getting references to our form and input
+// 	var signUpForm = $("form.signup");
 
-	// When the signup button is clicked, we validate the text and password are not blank
-	signUpForm.on("submit", function(event) {
-		event.preventDefault();
-		var userData = {
-			text: textInput.val().trim(),
-			password: passwordInput.val().trim()
-		};
+// 	// When the signup button is clicked, we validate the text and password are not blank
+// 	signUpForm.on("submit", function(event) {
+// 		event.preventDefault();
+// 		var userData = {
+// 			text: textInput.val().trim(),
+// 			password: passwordInput.val().trim()
+// 		};
 
-		if (!userData.text || !userData.password) {
-			return;
-		}
-		// If we have an text and password, run the signUpUser function
-		signUpUser(userData.text, userData.password);
-		textInput.val("");
-		passwordInput.val("");
-	});
+// 		if (!userData.text || !userData.password) {
+// 			return;
+// 		}
+// 		// If we have an text and password, run the signUpUser function
+// 		signUpUser(userData.text, userData.password);
+// 		textInput.val("");
+// 		passwordInput.val("");
+// 	});
 
-	// Does a post to the signup route. If successful, we are redirected to the members page
-	// Otherwise we log any errors
-	function signUpUser(text, password) {
-		$.post("/api/signup", {
-			text: text,
-			password: password
-		})
-			.then(function(data) {
-				window.location.replace("/members");
-				// If there's an error, handle it by throwing up a bootstrap alert
-			})
-			.catch(handleLoginErr);
-	}
+// Does a post to the signup route. If successful, we are redirected to the members page
+// Otherwise we log any errors
+// function signUpUser(text, password) {
+// 	$.post("/api/signup", {
+// 		text: text,
+// 		password: password
+// 	})
+// 		.then(function(data) {
+// 			window.location.replace("/members");
+// 			// If there's an error, handle it by throwing up a bootstrap alert
+// 		})
+// 		.catch(handleLoginErr);
+// }
 
-	function handleLoginErr(err) {
-		$("#alert .msg").text(err.responseJSON);
-		$("#alert").fadeIn(500);
-	}
-});
+// function handleLoginErr(err) {
+// 	$("#alert .msg").text(err.responseJSON);
+// 	$("#alert").fadeIn(500);
+// }
+// });
