@@ -80,14 +80,15 @@ $(document).ready(function() {
   });
 
   // If we have an text and password we run the loginUser function and clear the form
-
-  $("#submit").on("click", function() {
-    var textInput = $("input#employee-name");
+  $("form").submit(function(event) {
+    alert("Submitted");
+    event.preventDefault();
+    var textInput = $("#employee-name");
     var employeeData = {
       text: textInput.val().trim()
     };
     $.get("/api/employees/:id").then(function(data) {
-      $(".found-employee").text(data.employeeData.text);
+      $(".found-employee").text(data.employeeData.id);
     });
   });
 });
