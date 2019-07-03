@@ -6,6 +6,12 @@ const Top = Vue.component("Top", {
         <a class="navbar-brand" href="/logout">
           Logout
         </a>
+        <a class="navbar-brand" href="/manager">
+        Manager
+      </a>
+      <a class="navbar-brand" href="/members">
+      Member
+    </a>
       </div>
     </div>
   </nav>
@@ -37,10 +43,10 @@ const Vapp = new Vue({
   methods: {}
 });
 //--------------------------- Refactor this to Vue methods ---------------
-$(document).ready(function () {
+$(document).ready(function() {
   // This file just does a GET request to figure out which user is logged in
   // and updates the HTML on the page
-  $.get("/api/employees_data").then(function (data) {
+  $.get("/api/employees_data").then(function(data) {
     $(".member-name").text(data.userData.text);
     $(".member-salary").text(data.userData.salary);
     $(".member-score").text(data.userData.avg_score);
