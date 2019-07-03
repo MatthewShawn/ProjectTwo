@@ -21,34 +21,43 @@ const Top = Vue.component("Top", {
 });
 
 const Welcome = Vue.component("Welcome", {
-  template: 
+  template: ` 
     <div class="container">
       <div class="row">
         <div class="col-md-6 col-md-offset-3">
-        <form>
-  <div class="form-group">
-    <label for="employeeForm">Employee Name</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-          <h2>Welcome <span class="member-name"></span></h2>
-          <h2>Member Salary <span class="member-salary"></span></h2>
-          <h2>Member Score <span class="member-score"></span></h2>
-          <h2>Is Manager: <span class="member-manager"></span></h2>
+          <form>
+            <div class="form-group">
+              <label for="employeeForm">Employee Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="employee-name"
+                placeholder="Enter employee"
+              ></input>
+            </div>
+            <button id="submit" type="submit" class="btn btn-primary">
+              Submit
+            </button>
+          </form>
+          <h2>
+            Your employee is <span class="found-employee"></span>
+          </h2>
+          <h2>
+            Welcome <span class="member-name"></span>
+          </h2>
+          <h2>
+            Member Salary <span class="member-salary"></span>
+          </h2>
+          <h2>
+            Member Score <span class="member-score"></span>
+          </h2>
+          <h2>
+            Is Manager: <span class="member-manager"></span>
+          </h2>
         </div>
       </div>
     </div>
-    ,
+  `,
   data: {},
   methods: {}
 });
@@ -67,5 +76,18 @@ $(document).ready(function() {
     $(".member-salary").text(data.userData.salary);
     $(".member-score").text(data.userData.avg_score);
     $(".member-manager").text(data.userData.is_manager);
+    $(".member-manager").text(data.userData.is_manager);
+  });
+
+  // If we have an text and password we run the loginUser function and clear the form
+
+  $("#submit").on("click", function() {
+    var textInput = $("input#employee-name");
+    var employeeData = {
+      text: textInput.val().trim()
+    };
+    $.get("/api/employees/:id").then(function(data) {
+      $(".found-employee").text(data.employeeData.text);
+    });
   });
 });
