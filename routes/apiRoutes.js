@@ -130,6 +130,25 @@ module.exports = function(app) {
     });
 
 
+    // create and entry for emp_skills
+    // this will link a skill_data row to an employees row
+    app.post("/api/emp_skills", function(req, res) {
+        db.Emp_skills.create({
+                current_level: req.body.current_level,
+                employees_id: req.body.employees_id,
+                reviewer_id: req.body.reviewer_id,
+                skill_data_id: req.body.skill_data_id
+            })
+            .then(function() {
+                res.json({});
+            })
+            .catch(function(err) {
+                res.status(401).json(err);
+            });
+    });
+
+
+
 
 
     // Route for logging employees out
