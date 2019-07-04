@@ -36,6 +36,52 @@ module.exports = function(app) {
         });
     });
 
+    // Get the list of skill_data rows from a role_id via
+    // the job_skills.  a.k.a.  a join.
+    app.get("api/skill_data/role/:role_id", function(req, res) {
+        db.Job_skills.findAll({
+            where: {
+                role_id: req.params.role_id
+            }
+        }).then(function(dbJob_skills) {
+            var dbSkill_data;
+            dbJob_skills.forEach(job_skills_row => {
+                db.Skill_data.findOne({
+                    where: {
+                        id: job_skills_row.skill_data_id
+                    }
+                }).then(function(dbSkill_data_row) {
+                    dbSkill_data.push(dbSkill_data_row);
+                });
+            });
+            res.json(dbSkill_data);
+        });
+    })
+
+    // Get the list of skill_data rows from an empolyees_id + reviewer_id via
+    // the job_skills.  a.k.a.  a join.
+    app.get("api/skill_data/employee/:emp_id/:rev_id", function(req, res) {
+        db.Emp_skills.findAll({
+            where: {
+                employees_id: req.params.emp_id,
+                reviewer_id: req.params.rev_id
+            }
+        }).then(function(dbEmp_skills) {
+            var dbSkill_data;
+            dbEmp_skills.forEach(emp_skills_row => {
+                db.Skill_data.findOne({
+                    where: {
+                        id: emp_skills_row.skill_data_id
+                    }
+                }).then(function(dbSkill_data_row) {
+                    dbSkill_data.push(dbSkill_data_row);
+                });
+            });
+            res.json(dbSkill_data);
+        });
+    })
+
+
     // Add and row to the skill_data table
     app.post("/api/skill_data", function(req, res) {
         db.Skill_data.create({
@@ -93,6 +139,8 @@ module.exports = function(app) {
     });
 
     // Route for getting some data about our employees to be used client side
+    // this route does not currently return much of anything. -msm
+    // I question its purpose.
     app.get("/api/employees_data", function(req, res) {
         if (!req.user) {
             // The employee is not logged in, send back an empty object
@@ -133,14 +181,21 @@ module.exports = function(app) {
         });
     });
 
-    //find all employees with a specific job title.  (using the roles database)
+    //find all employees with a specific job title.  (using the role table)
     app.get("/api/role/:r_title", function(req, res) {
-        db.Role.findAll({
+        db.Role.findOne({
             where: {
                 r_title: req.params.r_title
             }
         }).then(function(dbRole) {
-            res.json(dbRole);
+            db.Employees.findAll({
+                where: {
+                    role_id: dbRole.id
+                }
+            }).then(function(dbEmployees) {
+                res.json(dbEmployees);
+            });
+
         });
     });
 
