@@ -179,9 +179,8 @@ $(document).ready(function () {
   }
 
   function handleDeleteButtonPress() {
-    let listItemData = $(this).parent("td").parent("tr").data("employee");
+    let listItemData = $(this).parent("td").parent("tr").data("employees");
     let id = listItemData.id;
-
     $.ajax({
       method: "DELETE",
       url: "/api/employees/" + id
