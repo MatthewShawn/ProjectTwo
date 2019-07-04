@@ -139,8 +139,6 @@ module.exports = function(app) {
     });
 
     // Route for getting some data about our employees to be used client side
-    // this route does not currently return much of anything. -msm
-    // I question its purpose.
     app.get("/api/employees_data", function(req, res) {
         if (!req.user) {
             // The employee is not logged in, send back an empty object
@@ -232,8 +230,8 @@ module.exports = function(app) {
                 id: req.params.id
             }
         }).then(function(dbEmployees) {
-            console.log(`Deleted Employee ${dbEmployees.e_name}`);
-            res.end(dbEmployees);
+            console.log(`Deleted Employee ${dbEmployees}`);
+            res.json(dbEmployees);
         });
     });
     //update current employees

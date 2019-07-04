@@ -142,7 +142,7 @@ $(document).ready(function () {
       newTr.append(`<td>No Role Assigned</td>`);
     }
     newTr.append("<td><a href='/manager?employee_id=" + employeeData.id + "'>Create a Review</a></td>");
-    newTr.append("<td><a style='cursor:pointer;color:red' class='delete-employee'>Delete employee</a></td>"); //still need to add button in div
+    newTr.append("<td><a style='cursor:pointer;color:red' class='delete-employee glyphicon glyphicon-remove'></a></td>"); //still need to add button in div
     return newTr;
   }
 
@@ -179,9 +179,8 @@ $(document).ready(function () {
   }
 
   function handleDeleteButtonPress() {
-    let listItemData = $(this).parent("td").parent("tr").data("employee");
+    let listItemData = $(this).parent("td").parent("tr").data("employees");
     let id = listItemData.id;
-
     $.ajax({
       method: "DELETE",
       url: "/api/employees/" + id
