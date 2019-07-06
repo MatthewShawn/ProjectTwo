@@ -44,6 +44,7 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: true
         });
 
+
         // An Employee can have many Emp_skills.
         //Employees.hasMany(models.Emp_skills, {
         //onDelete: "cascade"
