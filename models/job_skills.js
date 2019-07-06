@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes) {
         // that can exist for other Job_skills or other Emp_skills
         Job_skills.belongsTo(models.Role, {
             foreignKey: "id",
-            as: "role_id",
+            //as: "role_id",
             allowNull: false
         });
 

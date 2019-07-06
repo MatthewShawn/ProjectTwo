@@ -20,7 +20,7 @@ module.exports = function(sequelize, DataTypes) {
 
         Emp_skills.belongsTo(models.Employees, {
             foreignKey: "id",
-            as: "employees_id",
+            //as: "employees_id",
             allowNull: false
         });
         Emp_skills.belongsTo(models.Skill_crap, {

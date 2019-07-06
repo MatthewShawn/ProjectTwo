@@ -19,7 +19,9 @@ module.exports = function(sequelize, DataTypes) {
         Skill_crap.hasMany(models.Job_skills, {
             //onDelete: "cascade"
         });
-        Skill_crap.hasMany(models.Emp_skills, {});
+        Skill_crap.hasMany(models.Emp_skills, {
+            onDelete: "cascade"
+        });
     };
 
     return Skill_crap;
