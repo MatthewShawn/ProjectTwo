@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
         });
         Emp_skills.belongsTo(models.Skill_crap, {
             foreignKey: "id",
-            //      as: "skill_crap_id",
+            //as: "skill_crap_id",
             allowNull: false
         });
     };

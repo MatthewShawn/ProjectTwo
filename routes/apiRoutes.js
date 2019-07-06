@@ -44,22 +44,30 @@ module.exports = function(app) {
     db.Job_skills.findAll({
       where: {
         role_id: req.params.role_id
-      }
-    }).then(function(dbJob_skills) {
-      console.log(dbJob_skills);
-      //   var dbSkill_crap;
-      //   dbJob_skills.forEach(job_skills_row => {
-      //      db.Skill_crap.findOne({
-      //          where: {
-      //              id: job_skills_row.skill_crap_id
-      //         }
-      //     }).then(function(dbSkill_crap_row) {
-      //         dbSkill_crap.push(dbSkill_crap_row);
-      //    });
-      // });
-      // res.json(dbSkill_crap);
-      res.json(dbJob_skills);
-    });
+      },
+      include: db.Skill_crap
+    })
+      .then(function(dbJob_skills) {
+        console.log(dbJob_skills);
+        //   var dbSkill_crap;
+        //   dbJob_skills.forEach(job_skills_row => {
+        //      db.Skill_crap.findOne({
+        //          where: {
+        //              id: job_skills_row.skill_crap_id
+        //         }
+        //     }).then(function(dbSkill_crap_row) {
+        //         dbSkill_crap.push(dbSkill_crap_row);
+        //    });
+        // });
+        // res.json(dbSkill_crap);
+        res.json(dbJob_skills);
+      })
+      .then(function() {
+        res.redirect(307, "/api/login");
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
   });
 
   // Get the list of skill_data rows from an empolyees_id + reviewer_id via
@@ -70,7 +78,8 @@ module.exports = function(app) {
       where: {
         employees_id: req.params.emp_id,
         reviewer_id: req.params.rev_id
-      }
+      },
+      include: db.Skill_crap
     }).then(function(dbEmp_skills) {
       //var dbSkill_crap;
       //dbEmp_skills.forEach(emp_skills_row => {
@@ -96,6 +105,101 @@ module.exports = function(app) {
     }).then(function(dbSkill_crap) {
       res.json(dbSkill_crap);
     });
+  });
+
+  // Add and row to the skill_data table
+  app.post("/api/skill_crap", function(req, res) {
+    db.Skill_crap.create({
+      d_title: req.body.d_title,
+      d_desc: req.body.d_desc
+    })
+      .then(function() {
+        res.json({});
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
+  });
+
+  // find all the skill_data table entries
+  app.get("/api/skill_crap", function(req, res) {
+    console.log("Found the api/skill_crap api route.");
+    db.Skill_crap.findAll({}).then(function(dbSkill_crap) {
+      res.json(dbSkill_crap);
+    });
+  });
+
+  // Add and row to the role table
+  app.post("/api/role", function(req, res) {
+    db.Role.create({
+      r_title: req.body.r_title,
+      salary_low: req.body.salary_low,
+      salary_high: req.body.salary_high
+    })
+      .then(function() {
+        res.json({});
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
+  });
+
+  // Get the list of skill_data rows from an empolyees_id + reviewer_id via
+  // the job_skills.  a.k.a.  a join.
+  // this is not working....abandoning due to time...
+  app.get("/api/emp_skill_crap/:emp_id/:rev_id", function(req, res) {
+    db.Emp_skills.findAll({
+      where: {
+        employees_id: req.params.emp_id,
+        reviewer_id: req.params.rev_id
+      }
+    }).then(function(dbEmp_skills) {
+      //var dbSkill_crap;
+      //dbEmp_skills.forEach(emp_skills_row => {
+      // db.Skill_crap.findOne({
+      //   where: {
+      //     id: emp_skills_row.skill_crap_id
+      //  }
+      // }).then(function(dbSkill_crap_row) {
+      //    dbSkill_data.push(dbSkill_crap_row);
+      // });
+      //});
+      //res.json(dbSkill_crap);
+      res.json(dbEmp_skills);
+    });
+  });
+
+  // create and entry for job_skills
+  // this will link a skill_data row to a role row
+  app.post("/api/job_skills", function(req, res) {
+    db.Job_skills.create({
+      min_level_required: req.body.min_level_required,
+      role_id: req.body.role_id,
+      skill_crap_id: req.body.skill_crap_id
+    })
+      .then(function() {
+        res.json({});
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
+  });
+
+  // create and entry for emp_skills
+  // this will link a skill_data row to an employees row
+  app.post("/api/emp_skills", function(req, res) {
+    db.Emp_skills.create({
+      current_level: req.body.current_level,
+      employees_id: req.body.employees_id,
+      reviewer_id: req.body.reviewer_id,
+      skill_crap_id: req.body.skill_crap_id
+    })
+      .then(function() {
+        res.json({});
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
   });
 
   // Add and row to the skill_data table
@@ -188,6 +292,14 @@ module.exports = function(app) {
       res.json(dbEmployees);
     });
   });
+
+  //start skeleton ----------------- (using employee database)
+  //get list of all employees
+  app.get("/api/employees", function(req, res) {
+    db.Employees.findAll({}).then(function(dbEmployees) {
+      res.json(dbEmployees);
+    });
+  });
   //find one employee by specific id
   app.get("/api/employees/:id", function(req, res) {
     db.Employees.findOne({
@@ -264,6 +376,31 @@ module.exports = function(app) {
       res.json(dbEmployees);
     });
   });
+  //update current employees
+  app.put("/api/employees", function(req, res) {
+    db.Employees.update(
+      {
+        text: req.body.text,
+        //password: req.body.password,
+        salary: req.body.salary,
+        avg_score: req.body.avg_score,
+        is_manager: req.body.is_manager,
+        role_id: req.body.role_id
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }
+    )
+      .then(function(dbEmployees) {
+        res.json(dbEmployees);
+      })
+      .catch(function(err) {
+        res.json(err);
+      });
+  });
+
   //update current employees
   app.put("/api/employees", function(req, res) {
     db.Employees.update(

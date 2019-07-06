@@ -30,6 +30,7 @@ const survey = Vue.component("survey", {
 				<form id="review">
                     <h1 id="member-name">Employee: </h1>
                     <h1 id="role-name">Role: </h1>
+                    <div class="skill-container"></div>
                     <div id="skill-name"></div>
                     <div id="skill-desc"></div>
                     <div id="add-commments"></div>
@@ -66,37 +67,79 @@ $(document).ready(function() {
   var pathname = window.location.href;
   var url_array = pathname.split("="); // Split the string into an array with / as separator
   var employeeID = url_array[url_array.length - 1]; // Get the last part of the array (-1)
+  var roleID;
+  let skillContainer = $(".skill-container");
 
+  // display employee name for the review
   function getEmployeeName(employee) {
     $.get("/api/employees/" + employee).then(function(data) {
       $("#member-name").append(data.text);
     });
   }
 
+  // display role associated with employee
   function getRoleName(role) {
     $.get("/api/role/" + role).then(function(data) {
       if (data) {
-        $("#role-name").append(data.r_title);
+        let roleTitle = data.r_title;
+        let roleID = data.id;
+        alert(roleID);
+        $("#role-name").append(roleTitle);
+        return roleID;
       } else {
-        alert("no role");
+        alert("Please assign a role");
       }
     });
   }
 
-  getEmployeeName(employeeID);
-  getRoleName(employeeID);
-
-  //   function displayp(pData) {
-  //     var p = $("<p>");
-  //     p.data("p", pData); //could be employee(s)
-  //     p.append(pData.text);
-  //     if (pData.role) {
-  //       p.append(`<p>${pData.Role.length}</p>`);
-  //     } else {
-  //       p.append(`<p>No Role Assigned</p>`);
-  //     }
-  //     return p;
+  //retrieve skills
+  //   function getSkills() {
+  //     $.get("/api/role_skill_crap/:role_id" + role, function(data) {
+  //       let rowsToAdd = [];
+  //       for (var i = 0; i < data.length; i++) {
+  //         rowsToAdd.push(createSkillRow(data[i]));
+  //       }
+  //       renderSkillList(rowsToAdd);
+  //       employeeNameInput.val("");
+  //     });
   //   }
 
-  //   displayp();
+  //   function createSkillRow(employeeData) {
+  //     var newTr = $("<tr>");
+  //     newTr.data("employees", employeeData); //could be employee(s)
+  //     newTr.append(`<td>${employeeData.text}</td>`);
+  //     if (employeeData.Employees) {
+  //       newTr.append(`<td>${employeeData.Employees.length}</td>`);
+  //     } else {
+  //       newTr.append(`<td>No Role Assigned</td>`);
+  //     }
+  //     return newTr;
+  //   }
+
+  //   //rendering employees to the page
+  //   function renderSkillList(rows) {
+  //     employeeList
+  //       .children()
+  //       .not(":last")
+  //       .remove();
+  //     skillContainer.children(".alert").remove();
+  //     if (rows.length) {
+  //       console.log(rows);
+  //       employeeList.prepend(rows);
+  //     } else {
+  //       renderEmpty();
+  //     }
+  //   }
+
+  //   //handling what to render when there are no employees
+  //   function renderEmpty() {
+  //     var alertDiv = $("<div>");
+  //     alertDiv.addClass("alert alert-danger");
+  //     alertDiv.text("No Skills");
+  //     skillContainer.append(alertDiv);
+  //   }
+
+  getEmployeeName(employeeID);
+  getRoleName(employeeID);
+  //   getSkills(roleID);
 });
