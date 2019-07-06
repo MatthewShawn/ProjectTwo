@@ -2,3 +2,14 @@ form.signup,
 form.login {
   margin-top: 50px;
 }
+
+#postings,
+#review {
+  margin-left: 50%;
+  width: 100%;
+}
+
+.navbar-brand {
+  font-size: 18px;
+  font-weight: 700;
+}
