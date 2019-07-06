@@ -12,6 +12,9 @@ const Top = Vue.component("Top", {
         <a class="navbar-brand" href="/members">
         Member
       </a>
+      <a class="navbar-brand" href="/jobPost">
+      Jobs
+    </a>
         </div>
       </div>
     </nav>
@@ -141,7 +144,7 @@ $(document).ready(function () {
     } else {
       newTr.append(`<td>No Role Assigned</td>`);
     }
-    newTr.append("<td><a href='/manager?employee_id=" + employeeData.id + "'>Create a Review</a></td>");
+    newTr.append("<td><a href='/survey?employee_id=" + employeeData.id + "'>Create a Review</a></td>");
     newTr.append("<td><a style='cursor:pointer;color:red' class='delete-employee glyphicon glyphicon-remove'></a></td>"); //still need to add button in div
     return newTr;
   }
