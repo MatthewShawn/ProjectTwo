@@ -19,17 +19,18 @@ module.exports = function(sequelize, DataTypes) {
     // level, and that it must have a skill data defined that can exist for other
     // Emp_skills and Job_skills
 
-    Emp_skills.belongsTo(models.Employees, {
-      foreignKey: "id",
-      as: "employees_id",
-      allowNull: false
-    });
-    Emp_skills.belongsTo(models.Skill_data, {
-      foreignKey: "id",
-      as: "skill_data_id",
-      allowNull: false
-    });
-  };
+
+        Emp_skills.belongsTo(models.Employees, {
+            foreignKey: "id",
+            as: "employees_id",
+            allowNull: false
+        });
+        Emp_skills.belongsTo(models.Skill_crap, {
+            foreignKey: "id",
+            as: "skill_crap_id",
+            allowNull: false
+        });
+    };
 
   return Emp_skills;
 };
