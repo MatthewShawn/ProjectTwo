@@ -28,8 +28,8 @@ const survey = Vue.component("survey", {
 		<div class="row">
 			<div class="col-md-6 offset-md-3">
 				<form id="review">
-                    <h1 id="p-name"></h1>
-                    <div id="member-name"></div>
+                    <h1 id="member-name">Employee: </h1>
+                    <h1 id="role-name">Role: </h1>
                     <div id="skill-name"></div>
                     <div id="skill-desc"></div>
                     <div id="add-commments"></div>
@@ -66,15 +66,25 @@ $(document).ready(function() {
   var pathname = window.location.href;
   var url_array = pathname.split("="); // Split the string into an array with / as separator
   var employeeID = url_array[url_array.length - 1]; // Get the last part of the array (-1)
-  alert(employeeID); // Alert last segment
 
   function getEmployeeName(employee) {
     $.get("/api/employees/" + employee).then(function(data) {
-      $("#member-name").text(data.text);
+      $("#member-name").append(data.text);
+    });
+  }
+
+  function getRoleName(role) {
+    $.get("/api/role/" + role).then(function(data) {
+      if (data) {
+        $("#role-name").append(data.r_title);
+      } else {
+        alert("no role");
+      }
     });
   }
 
   getEmployeeName(employeeID);
+  getRoleName(employeeID);
 
   //   function displayp(pData) {
   //     var p = $("<p>");
