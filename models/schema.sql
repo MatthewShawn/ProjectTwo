@@ -37,7 +37,7 @@ primary key (id),
 foreign key (role_id) references role(id)
 );
 
-create table skill_data (
+create table skill_crap (
 id integer not null auto_increment,
 d_title varchar (150) not null,
 d_desc text,
@@ -50,25 +50,25 @@ create table emp_skills (
 id integer not null auto_increment,
 employees_id int,
 reviewer_id int,
-skill_data_id int,
+skill_crap_id int,
 current_level int,
 created_at TIMESTAMP NULL DEFAULT current_timestamp,
 updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id),
 foreign key (employees_id) references employees(id),
 foreign key (reviewer_id) references employees(id),
-foreign key (skill_data_id) references skill_data(id)
+foreign key (skill_crap_id) references skill_crap(id)
 );
 
 create table job_skills (
 id integer not null auto_increment,
 min_level_required int,
 role_id int,
-skill_data_id int,
+skill_crap_id int,
 created_at TIMESTAMP NULL DEFAULT current_timestamp,
 updated_at TIMESTAMP NULL DEFAULT current_timestamp,
 primary key (id),
 foreign key (role_id) references role(id),
-foreign key (skill_data_id) references skill_data(id)
+foreign key (skill_crap_id) references skill_crap(id)
 );
 

@@ -30,61 +30,64 @@ module.exports = function(app) {
 
 
     // find all the skill_data table entries
-    app.get("/api/skill_data", function(req, res) {
-        db.Skill_data.findAll({}).then(function(dbSkill_data) {
-            res.json(dbSkill_data);
+    app.get("/api/skill_crap", function(req, res) {
+        console.log("Found the api/skill_crap api route.");
+        db.Skill_crap.findAll({}).then(function(dbSkill_crap) {
+            res.json(dbSkill_crap);
         });
     });
 
     // Get the list of skill_data rows from a role_id via
     // the job_skills.  a.k.a.  a join.
-    app.get("api/skill_data/role/:role_id", function(req, res) {
+    app.get("/api/role_skill_crap/:role_id", function(req, res) {
+        console.log("Found the api/skill_crap/role/:role_id api route.");
         db.Job_skills.findAll({
             where: {
                 role_id: req.params.role_id
             }
         }).then(function(dbJob_skills) {
-            var dbSkill_data;
+            console.log(dbJob_skills);
+            var dbSkill_crap;
             dbJob_skills.forEach(job_skills_row => {
-                db.Skill_data.findOne({
+                db.Skill_crap.findOne({
                     where: {
-                        id: job_skills_row.skill_data_id
+                        id: job_skills_row.skill_crap_id
                     }
-                }).then(function(dbSkill_data_row) {
-                    dbSkill_data.push(dbSkill_data_row);
+                }).then(function(dbSkill_crap_row) {
+                    dbSkill_crap.push(dbSkill_crap_row);
                 });
             });
-            res.json(dbSkill_data);
+            res.json(dbSkill_crap);
         });
     })
 
     // Get the list of skill_data rows from an empolyees_id + reviewer_id via
     // the job_skills.  a.k.a.  a join.
-    app.get("api/skill_data/employee/:emp_id/:rev_id", function(req, res) {
+    app.get("/api/emp_skill_crap/:emp_id/:rev_id", function(req, res) {
         db.Emp_skills.findAll({
             where: {
                 employees_id: req.params.emp_id,
                 reviewer_id: req.params.rev_id
             }
         }).then(function(dbEmp_skills) {
-            var dbSkill_data;
+            var dbSkill_crap;
             dbEmp_skills.forEach(emp_skills_row => {
-                db.Skill_data.findOne({
+                db.Skill_crap.findOne({
                     where: {
-                        id: emp_skills_row.skill_data_id
+                        id: emp_skills_row.skill_crap_id
                     }
-                }).then(function(dbSkill_data_row) {
-                    dbSkill_data.push(dbSkill_data_row);
+                }).then(function(dbSkill_crap_row) {
+                    dbSkill_data.push(dbSkill_crap_row);
                 });
             });
-            res.json(dbSkill_data);
+            res.json(dbSkill_crap);
         });
     })
 
 
     // Add and row to the skill_data table
-    app.post("/api/skill_data", function(req, res) {
-        db.Skill_data.create({
+    app.post("/api/skill_crap", function(req, res) {
+        db.Skill_crap.create({
                 d_title: req.body.d_title,
                 d_desc: req.body.d_desc
             })
@@ -119,7 +122,7 @@ module.exports = function(app) {
         db.Job_skills.create({
                 min_level_required: req.body.min_level_required,
                 role_id: req.body.role_id,
-                skill_data_id: req.body.skill_data_id
+                skill_crap_id: req.body.skill_crap_id
             })
             .then(function() {
                 res.json({});
@@ -137,7 +140,7 @@ module.exports = function(app) {
                 current_level: req.body.current_level,
                 employees_id: req.body.employees_id,
                 reviewer_id: req.body.reviewer_id,
-                skill_data_id: req.body.skill_data_id
+                skill_crap_id: req.body.skill_crap_id
             })
             .then(function() {
                 res.json({});

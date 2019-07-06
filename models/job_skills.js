@@ -22,9 +22,9 @@ module.exports = function(sequelize, DataTypes) {
             allowNull: false
         });
 
-        Job_skills.belongsTo(models.Skill_data, {
+        Job_skills.belongsTo(models.Skill_crap, {
             foreignKey: "id",
-            as: "skill_data_id",
+            as: "skill_crap_id",
             allowNull: false
         });
     };
