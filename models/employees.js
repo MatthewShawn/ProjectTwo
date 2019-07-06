@@ -41,8 +41,9 @@ module.exports = function(sequelize, DataTypes) {
         Employees.belongsTo(models.Role, {
             foreignKey: "id",
             as: "role_id",
-            allowNull: false
+            allowNull: true
         });
+
 
         // An Employee can have many Emp_skills.
         //Employees.hasMany(models.Emp_skills, {
