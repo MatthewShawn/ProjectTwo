@@ -50,6 +50,11 @@ foreign key (reviewer_id) references employees(id),
 foreign key (skill_crap_id) references skill_crap(id)
 );
 
+ALTER TABLE Emp_skills
+ADD CONSTRAINT Employees_Emp_SkillsId_fkey FOREIGN KEY (employees_id)
+REFERENCES Employees (id) MATCH SIMPLE
+ON DELETE CASCADE;
+
 create table job_skills (
 id integer not null auto_increment,
 min_level_required int,
