@@ -36,6 +36,7 @@ module.exports = function(app) {
         });
     });
 
+
     // Get the list of skill_data rows from a role_id via
     // the job_skills.  a.k.a.  a join.
     // this is not working....abandoning due to time
@@ -88,8 +89,6 @@ module.exports = function(app) {
                 model: Skill_crap,
                 through: { attributes: [id] }
             }]
-
-
         }).then(function(dbEmp_skills) {
             //var dbSkill_crap;
             //dbEmp_skills.forEach(emp_skills_row => {
