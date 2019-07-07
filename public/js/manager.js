@@ -58,10 +58,10 @@ const Vapp = new Vue({
 	methods: {}
 });
 //--------------------------- Refactor this to Vue methods ---------------
-$(document).ready(function () {
+$(document).ready(function() {
 	// This file just does a GET request to figure out which user is logged in
 	// and updates the HTML on the page
-	$.get("/api/employees_data").then(function (data) {
+	$.get("/api/employees_data").then(function(data) {
 		$(".member-name").text(data.userData.text);
 		// $(".member-salary").text(data.userData.salary);
 		// $(".member-score").text(data.userData.avg_score);
@@ -86,9 +86,9 @@ $(document).ready(function () {
 
 		if (
 			!employeeNameInput
-			.val()
-			.trim()
-			.trim()
+				.val()
+				.trim()
+				.trim()
 		) {
 			return;
 		}
@@ -118,24 +118,20 @@ $(document).ready(function () {
 		}
 		newTr.append(
 			"<td><a href='/survey?employee_id=" +
-			employeeData.id +
-			"'>Create a Review</a></td>"
+				employeeData.id +
+				"'>Create a Review</a></td>"
 		);
 		newTr.data("employees", employeeData);
-		newTr.append(
-			`<td>${employeeData.salary}</td>`
-		)
-		newTr.data("employees", employeeData)
-		newTr.append(
-			`<td>${employeeData.avg_score}</td>`
-		)
+		newTr.append(`<td>${employeeData.salary}</td>`);
+		newTr.data("employees", employeeData);
+		newTr.append(`<td>${employeeData.avg_score}</td>`);
 		newTr.append("<td>X</td>"); //still need to add button in div
 		return newTr;
 	}
 
 	//retrieve employees
 	function getEmployees() {
-		$.get("api/employees", function (data) {
+		$.get("api/employees", function(data) {
 			let rowsToAdd = [];
 			for (var i = 0; i < data.length; i++) {
 				rowsToAdd.push(createEmployeeRow(data[i]));
@@ -144,7 +140,6 @@ $(document).ready(function () {
 			employeeNameInput.val("");
 		});
 	}
-
 
 	//rendering employees to the page
 	function renderEmployeeList(rows) {
@@ -172,9 +167,4 @@ $(document).ready(function () {
 			url: "/api/employees/" + id
 		}).then(getEmployees);
 	}
-}); <
-svg xmlns = "http://www.w3.org/2000/svg"
-width = "12"
-height = "16"
-viewBox = "0 0 12 16" > < path fill - rule = "evenodd"
-d = "M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z" / > < /svg>
+});
