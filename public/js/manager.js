@@ -61,14 +61,6 @@ const Vapp = new Vue({
 $(document).ready(function() {
 	// This file just does a GET request to figure out which user is logged in
 	// and updates the HTML on the page
-	$.get("/api/employees_data").then(function(data) {
-		$(".member-name").text(data.userData.text);
-		// $(".member-salary").text(data.userData.salary);
-		// $(".member-score").text(data.userData.avg_score);
-		// $(".member-manager").text(data.userData.is_manager);
-		// $(".member-manager").text(data.userData.is_manager);
-	});
-	//getting reference to name and employees
 	let employeeNameInput = $("#employee-name");
 	let employeeList = $("tbody");
 	let employeeContainer = $(".employee-container");
@@ -103,18 +95,24 @@ $(document).ready(function() {
 	}
 
 	//new list row for employees
-	function createEmployeeRow(employeeData) {
+	function createEmployeeRow(employeeData, roles) {
+		let optionsArray = [];
+		for (let i = 0; i < roles.length; i++) {
+			optionsArray.push(
+				`<option value=${roles[i].id}>${roles[i].r_title}</option>`
+			);
+		}
 		var newTr = $("<tr>");
 		newTr.data("employees", employeeData); //could be employee(s)
 		newTr.append(`<td>${employeeData.text}</td>`);
 		if (employeeData.Employees) {
 			newTr.append(`<td>${employeeData.Employees.length}</td>`);
 		} else {
-			newTr.append(`<td><select id="first-choice">
-			<option selected value="base">Please Select</option>
-			<option value="Biggie">Biggie</option>
-			<option value="Little Biggie">Little Biggie</option>
-			</select></td>`);
+			newTr.append(
+				`<td><select id="first-choice">
+			<option selected value="base">Please Select</option>` + optionsArray.toString()
+			);
+			newTr.append("</select></td>");
 		}
 		newTr.append(
 			"<td><a href='/survey?employee_id=" +
@@ -131,13 +129,18 @@ $(document).ready(function() {
 
 	//retrieve employees
 	function getEmployees() {
+		let empData;
+		let rowsToAdd = [];
 		$.get("api/employees", function(data) {
-			let rowsToAdd = [];
-			for (var i = 0; i < data.length; i++) {
-				rowsToAdd.push(createEmployeeRow(data[i]));
-			}
-			renderEmployeeList(rowsToAdd);
-			employeeNameInput.val("");
+			empData = data;
+		}).then(function(empData) {
+			$.get("api/role", function(roles) {
+				for (var i = 0; i < empData.length; i++) {
+					rowsToAdd.push(createEmployeeRow(empData[i], roles));
+				}
+				renderEmployeeList(rowsToAdd);
+				employeeNameInput.val("");
+			});
 		});
 	}
 
