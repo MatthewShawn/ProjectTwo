@@ -40,7 +40,10 @@ module.exports = function(app) {
   // the job_skills.  a.k.a.  a join.
   // this is not working....abandoning due to time
   app.get("/api/role_skill_crap/:role_id", function(req, res) {
-    console.log("Found the api/skill_crap/role/:role_id api route.");
+    console.log("=====================================================");
+    console.log(req);
+    console.log("=====================================================");
+    console.log("Found the /api/role_skill_crap/:role_id api route.");
     db.Job_skills.findAll({
       where: {
         role_id: req.params.role_id

@@ -1,15 +1,5 @@
-
-DROP DATABASE IF EXISTS exampledb;
-CREATE DATABASE exampledb;
-
-DROP DATABASE IF EXISTS testdb;
-CREATE DATABASE testdb;
-
 DROP DATABASE IF EXISTS perf_review;
 CREATE DATABASE perf_review;
-
-DROP DATABASE IF EXISTS testdb;
-CREATE DATABASE testdb;
 
 use perf_review;
 
