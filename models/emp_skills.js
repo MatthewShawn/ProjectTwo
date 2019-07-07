@@ -19,12 +19,12 @@ module.exports = function(sequelize, DataTypes) {
 
 
         Emp_skills.belongsTo(models.Employees, {
-            foreignKey: "id",
+            foreignKey: "employees_id", // this is wrong, but employees_id is not working
             //as: "employees_id",
             allowNull: false
         });
         Emp_skills.belongsTo(models.Skill_crap, {
-            foreignKey: "id",
+            foreignKey: "skill_crap_id",
             //as: "skill_crap_id",
             allowNull: false
         });

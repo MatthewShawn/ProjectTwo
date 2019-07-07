@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
         // Associating Author with Posts
         // When an Author is deleted, also delete any associated Posts
         Skill_crap.hasMany(models.Job_skills, {
-            //onDelete: "cascade"
+            onDelete: "cascade"
         });
         Skill_crap.hasMany(models.Emp_skills, {
             onDelete: "cascade"
