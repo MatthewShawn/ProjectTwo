@@ -34,19 +34,14 @@ const Welcome = Vue.component("Welcome", {
           <tr>
             <th>Name</th>
             <th>Edit Role Info</th>
-            <th>Delete</th>
+						<th>Review</th>
+						<th>Salary</th>
+						<th>Score</th>
+						<th>Delete</th>
           </tr>
           </thead>
           <tbody>
-            <tr id="form-row">
-            <form id="employee-form">
-            <td colspan="2">
-            <input placeholder= "Enter employee name" id="employee-name" type="text"/>
-            </td>
-            <td><button type="submit" class="btn btn-success">Create employee</button>
-            </td>
-            </form>
-            </tr>
+
           </tbody>
           </table>
           </div>
@@ -63,10 +58,10 @@ const Vapp = new Vue({
 	methods: {}
 });
 //--------------------------- Refactor this to Vue methods ---------------
-$(document).ready(function() {
+$(document).ready(function () {
 	// This file just does a GET request to figure out which user is logged in
 	// and updates the HTML on the page
-	$.get("/api/employees_data").then(function(data) {
+	$.get("/api/employees_data").then(function (data) {
 		$(".member-name").text(data.userData.text);
 		// $(".member-salary").text(data.userData.salary);
 		// $(".member-score").text(data.userData.avg_score);
@@ -77,6 +72,9 @@ $(document).ready(function() {
 	let employeeNameInput = $("#employee-name");
 	let employeeList = $("tbody");
 	let employeeContainer = $(".employee-container");
+	let employeeRole = $("#employee-role");
+	let employeeSalary = $("#employee-salary");
+	let employeeScore = $("#employee-score");
 	//adding event listeners
 	$(document).on("submit", "#employee-form", handleEmployeeFormSubmit);
 	$(document).on("click", ".delete-employee", handleDeleteButtonPress);
@@ -88,9 +86,9 @@ $(document).ready(function() {
 
 		if (
 			!employeeNameInput
-				.val()
-				.trim()
-				.trim()
+			.val()
+			.trim()
+			.trim()
 		) {
 			return;
 		}
@@ -112,22 +110,32 @@ $(document).ready(function() {
 		if (employeeData.Employees) {
 			newTr.append(`<td>${employeeData.Employees.length}</td>`);
 		} else {
-			newTr.append(`<td>No Role Assigned</td>`);
+			newTr.append(`<td><select id="first-choice">
+			<option selected value="base">Please Select</option>
+			<option value="Biggie">Biggie</option>
+			<option value="Little Biggie">Little Biggie</option>
+			</select></td>`);
 		}
 		newTr.append(
 			"<td><a href='/survey?employee_id=" +
-				employeeData.id +
-				"'>Create a Review</a></td>"
+			employeeData.id +
+			"'>Create a Review</a></td>"
 		);
+		newTr.data("employees", employeeData);
 		newTr.append(
-			"<td><a style='cursor:pointer;color:red' class='delete-employee glyphicon glyphicon-remove'></a></td>"
-		); //still need to add button in div
+			`<td>${employeeData.salary}</td>`
+		)
+		newTr.data("employees", employeeData)
+		newTr.append(
+			`<td>${employeeData.avg_score}</td>`
+		)
+		newTr.append("<td>X</td>"); //still need to add button in div
 		return newTr;
 	}
 
 	//retrieve employees
 	function getEmployees() {
-		$.get("api/employees", function(data) {
+		$.get("api/employees", function (data) {
 			let rowsToAdd = [];
 			for (var i = 0; i < data.length; i++) {
 				rowsToAdd.push(createEmployeeRow(data[i]));
@@ -136,6 +144,7 @@ $(document).ready(function() {
 			employeeNameInput.val("");
 		});
 	}
+
 
 	//rendering employees to the page
 	function renderEmployeeList(rows) {
@@ -152,14 +161,6 @@ $(document).ready(function() {
 		}
 	}
 
-	//handling what to render when there are no employees
-	function renderEmpty() {
-		var alertDiv = $("<div>");
-		alertDiv.addClass("alert alert-danger");
-		alertDiv.text("No Employees");
-		employeeContainer.append(alertDiv);
-	}
-
 	function handleDeleteButtonPress() {
 		let listItemData = $(this)
 			.parent("td")
@@ -171,18 +172,9 @@ $(document).ready(function() {
 			url: "/api/employees/" + id
 		}).then(getEmployees);
 	}
-
-	// If we have an text and password we run the loginUser function and clear the form
-
-	// $("form").submit(function (event) {
-	// alert("Submitted");
-	// event.preventDefault();
-	// var textInput = $("#employee-name").val();
-	// var employeeData = {
-	//   text: textInput.val().trim()
-	// };
-	// $.get("/api/employees/:id").then(function (data) {
-	//   $(".found-employee").text(data.employeeData.id);
-	// });
-	// });
-});
+}); <
+svg xmlns = "http://www.w3.org/2000/svg"
+width = "12"
+height = "16"
+viewBox = "0 0 12 16" > < path fill - rule = "evenodd"
+d = "M7.48 8l3.75 3.75-1.48 1.48L6 9.48l-3.75 3.75-1.48-1.48L4.52 8 .77 4.25l1.48-1.48L6 6.52l3.75-3.75 1.48 1.48L7.48 8z" / > < /svg>
