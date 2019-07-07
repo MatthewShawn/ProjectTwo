@@ -48,8 +48,9 @@ module.exports = function(app) {
                 },
                 //include: db.Skill_crap
                 include: [{
-                    model: Skill_crap,
-                    through: { attributes: [id] }
+                    model: db.Skill_crap
+                        //where: { id: db.Job_skills.skill_crap_id },
+                        //through: { attributes: [id] }
                 }]
             })
             .then(function(dbJob_skills) {
@@ -84,11 +85,11 @@ module.exports = function(app) {
                 employees_id: req.params.emp_id,
                 reviewer_id: req.params.rev_id
             },
-            //include:  db.Skill_crap
-            include: [{
-                model: Skill_crap,
-                through: { attributes: [id] }
-            }]
+            include: db.Skill_crap
+                // include: [{
+                //     model: db.Skill_crap
+                //    through: { attributes: [id] }
+                // }]
         }).then(function(dbEmp_skills) {
             //var dbSkill_crap;
             //dbEmp_skills.forEach(emp_skills_row => {
