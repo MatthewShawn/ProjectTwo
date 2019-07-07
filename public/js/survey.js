@@ -79,6 +79,11 @@ $(document).ready(function() {
   function getEmployeeName(employee) {
     $.get("/api/employees/" + employee).then(function(data) {
       $("#member-name").append(data.text);
+      roleID = data.RoleId;
+      console.log("=====================================================");
+      console.log(roleID);
+      console.log("=====================================================");
+      getRoleName(roleID);
     });
   }
 
@@ -87,7 +92,6 @@ $(document).ready(function() {
     $.get("/api/role/" + role).then(function(data) {
       if (data) {
         let roleTitle = data.r_title;
-        roleID = data.id;
         $("#role-name").append(roleTitle);
         getSkills(roleID);
       } else {
@@ -124,5 +128,4 @@ $(document).ready(function() {
     return newDiv;
   }
   getEmployeeName(employeeID);
-  getRoleName(employeeID);
 });
