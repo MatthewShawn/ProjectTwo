@@ -26,9 +26,11 @@ const Top = Vue.component("Top", {
 const Welcome = Vue.component("Welcome", {
 	template: `
     <div class="employee-container">
-      <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-        <h1>Employee Info</h1>
+			<div class="row">
+			<div class="col-md-1"></div>
+			<div class="container">
+        <div class="col-md-10">
+        <h1 style="text-align:center;">Employee Info</h1>
         <table class="table table-striped">
         <thead>
           <tr>
@@ -37,6 +39,7 @@ const Welcome = Vue.component("Welcome", {
 						<th>Review</th>
 						<th>Salary</th>
 						<th>Score</th>
+						<th>Apply</th>
 						<th>Delete</th>
           </tr>
           </thead>
@@ -44,9 +47,11 @@ const Welcome = Vue.component("Welcome", {
 
           </tbody>
           </table>
+					<div class="col-md-1"></div>
+					</div>
           </div>
         </div>
-      </div>
+				</div>
   `,
 	data: {},
 	methods: {}
@@ -70,6 +75,7 @@ $(document).ready(function () {
 	//adding event listeners
 	$(document).on("submit", "#employee-form", handleEmployeeFormSubmit);
 	$(document).on("click", ".delete-employee", handleDeleteButtonPress);
+	$(document).on("click", ".apply-changes", handleApplyChanges);
 	//listing all employees
 	getEmployees();
 	//function when form is submitted.
@@ -123,7 +129,9 @@ $(document).ready(function () {
 		newTr.append(`<td>${employeeData.salary}</td>`);
 		newTr.data("employees", employeeData);
 		newTr.append(`<td>${employeeData.avg_score}</td>`);
+		newTr.append("<td><a style='cursor:pointer;color:green' class='apply-changes'>Apply</a></td>"); //still need to add button in div
 		newTr.append("<td><a style='cursor:pointer;color:red' class='delete-employee'>Delete</a></td>"); //still need to add button in div
+
 		return newTr;
 	}
 
@@ -170,4 +178,16 @@ $(document).ready(function () {
 			url: "/api/employees/" + id
 		}).then(getEmployees);
 	}
+
+	function handleApplyChanges(post) {
+		$.ajax({
+			method: "PUT",
+			url: "/api/role",
+			data: post
+		}).then(function () {
+			window.location.href = "/manager"
+		});
+	}
+
+
 });
