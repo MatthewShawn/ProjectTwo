@@ -36,6 +36,7 @@ module.exports = function(app) {
 		});
 	});
 
+
 	// Get the list of skill_data rows from a role_id via
 	// the job_skills.  a.k.a.  a join.
 	// this is not working....abandoning due to time
@@ -69,6 +70,7 @@ module.exports = function(app) {
 				res.status(401).json(err);
 			});
 	});
+
 
 	// Get the list of skill_data rows from an empolyees_id + reviewer_id via
 	// the job_skills.  a.k.a.  a join.
