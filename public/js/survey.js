@@ -39,8 +39,7 @@ const survey = Vue.component("survey", {
     `,
 	data: {},
 	methods: {}
-});
-{
+}); {
 	/* <label for="comments">Comments:</label>
 <textarea placeholder="Any additional feedback" class="form-control" rows="5" id="comments"></textarea> */
 }
@@ -49,7 +48,7 @@ const Vapp = new Vue({
 	data: {},
 	methods: {}
 });
-$(document).ready(function() {
+$(document).ready(function () {
 	var pathname = window.location.href;
 	var url_array = pathname.split("="); // Split the string into an array with / as separator
 	var employeeID = url_array[url_array.length - 1]; // Get the last part of the array (-1)
@@ -60,13 +59,13 @@ $(document).ready(function() {
 	var reviewerID;
 	var skillCrapIDArray = [];
 	// once the form is properly filled out, the form will submit
-	$(".submit").click(function(event) {
+	$(".submit").click(function (event) {
 		event.preventDefault();
 		for (var i = 0; i < numForms; i++) {
 			addReview(
 				$("#rating" + i)
-					.val()
-					.trim(),
+				.val()
+				.trim(),
 				i
 			);
 		}
@@ -87,8 +86,8 @@ $(document).ready(function() {
 				skill_crap_id: skillCrapIDArray[skillCrapID]
 			};
 			console.log(newSkillReview);
-			$.post("/api/emp_skills", newSkillReview).then(function(response) {
-				// window.location.href = "/members";
+			$.post("/api/emp_skills", newSkillReview).then(function (response) {
+				window.location.href = "/manager";
 			});
 		} else {
 			alert("Please fill all of the forms with numbers 1-10");
@@ -96,7 +95,7 @@ $(document).ready(function() {
 	}
 	// display employee name for the review
 	function getEmployeeName(employee) {
-		$.get("/api/employees/" + employee).then(function(data) {
+		$.get("/api/employees/" + employee).then(function (data) {
 			$("#member-name").append(data.text);
 			roleID = data.RoleId;
 			getRoleName(roleID);
@@ -104,15 +103,15 @@ $(document).ready(function() {
 	}
 	// gets the ID of the reviewer
 	function getReviewerID() {
-		$.get("/api/employees_data").then(function(data) {
+		$.get("/api/employees_data").then(function (data) {
 			reviewerID = data.userData.id;
-			alert(reviewerID);
+			// alert(reviewerID);
 			return reviewerID;
 		});
 	}
 	// display role associated with employee
 	function getRoleName(role) {
-		$.get("/api/role/" + role).then(function(data) {
+		$.get("/api/role/" + role).then(function (data) {
 			if (data) {
 				// displays the role of the user
 				let roleTitle = data.r_title;
@@ -125,7 +124,7 @@ $(document).ready(function() {
 	}
 	//   retrieve skills
 	function getSkills(role) {
-		$.get("/api/role_skill_crap/" + role, function(data) {
+		$.get("/api/role_skill_crap/" + role, function (data) {
 			let skillsToAdd = [];
 			numForms = data.length;
 			for (var i = 0; i < data.length; i++) {

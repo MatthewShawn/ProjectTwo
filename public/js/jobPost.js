@@ -89,10 +89,10 @@ const JobPost = Vue.component("JobPost", {
 			let lowRange = $("#salary-low").val();
 			let highRange = $("#salary-high").val();
 			let minLevelRequired = $("#prereq").val();
-			$(".s-title").each(function() {
+			$(".s-title").each(function () {
 				sTitles.push($(this).val());
 			});
-			$(".s-desc").each(function() {
+			$(".s-desc").each(function () {
 				sDescs.push($(this).val());
 			});
 			this.$root.doEverything(
@@ -123,7 +123,7 @@ const Vapp = new Vue({
 				r_title: rTitle,
 				salary_low: lowRange,
 				salary_high: highRange
-			}).then(function(dat) {
+			}).then(function (dat) {
 				let roleId = dat.data.id;
 				console.log("roleId = ", roleId);
 				console.log("sTitles = ", sTitles);
@@ -132,14 +132,16 @@ const Vapp = new Vue({
 					$.post("/api/skill_crap", {
 						d_title: sTitles[i],
 						d_desc: sDescs[i]
-					}).then(function(data) {
+					}).then(function (data) {
 						let skillCrapId = data.data.id;
 						console.log("skillCrapId = ", skillCrapId);
 						$.post("/api/job_skills", {
 							min_level_required: minLevelRequired,
 							role_id: roleId,
 							skill_crap_id: skillCrapId
-						});
+						}).then(function () {
+							window.location.href = "/jobPost";
+						})
 					});
 				}
 			});
