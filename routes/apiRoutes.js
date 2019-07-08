@@ -400,29 +400,5 @@ module.exports = function(app) {
 				res.json(err);
 			});
 	});
-
-	//update current employees
-	app.put("/api/employees", function(req, res) {
-		db.Employees.update(
-			{
-				text: req.body.text,
-				salary: req.body.salary,
-				avg_score: req.body.avg_score,
-				is_manager: req.body.is_manager,
-				role_id: req.body.role_id
-			},
-			{
-				where: {
-					id: req.body.id
-				}
-			}
-		)
-			.then(function(dbEmployees) {
-				res.json(dbEmployees);
-			})
-			.catch(function(err) {
-				res.json(err);
-			});
-	});
 	//end skeleton ----------------zz
 }; //end module.exports function

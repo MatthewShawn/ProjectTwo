@@ -25,7 +25,7 @@ const Top = Vue.component("Top", {
 
 const JobPost = Vue.component("JobPost", {
 	template: `
-      <form class="col-md-6 container" v-on:submit.prevent="postJobSkills()">
+      <form class="container" v-on:submit.prevent="postJobSkills()">
         <div class="form-row">
         <div class="col-auto">
         <label class="col-form-label" for="job-title">Job Title</label>

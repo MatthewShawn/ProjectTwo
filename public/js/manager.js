@@ -164,7 +164,6 @@ $(document).ready(function() {
 			.remove();
 		employeeContainer.children(".alert").remove();
 		if (rows.length) {
-			console.log(rows);
 			employeeList.prepend(rows);
 		} else {
 			renderEmpty();
@@ -203,8 +202,8 @@ $(document).ready(function() {
 				id: id,
 				role_id: thisRole
 			}
-		}).then(function(err) {
-			console.log(err);
+		}).then(function(dat) {
+			console.log(dat);
 		});
 	}
 });
