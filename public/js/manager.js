@@ -63,7 +63,7 @@ const Vapp = new Vue({
 	methods: {}
 });
 //--------------------------- Refactor this to Vue methods ---------------
-$(document).ready(function () {
+$(document).ready(function() {
 	// This file just does a GET request to figure out which user is logged in
 	// and updates the HTML on the page
 	let employeeNameInput = $("#employee-name");
@@ -84,9 +84,9 @@ $(document).ready(function () {
 
 		if (
 			!employeeNameInput
-			.val()
-			.trim()
-			.trim()
+				.val()
+				.trim()
+				.trim()
 		) {
 			return;
 		}
@@ -122,15 +122,19 @@ $(document).ready(function () {
 		}
 		newTr.append(
 			"<td><a href='/survey?employee_id=" +
-			employeeData.id +
-			"'>Create a Review</a></td>"
+				employeeData.id +
+				"'>Create a Review</a></td>"
 		);
 		newTr.data("employees", employeeData);
 		newTr.append(`<td>${employeeData.salary}</td>`);
 		newTr.data("employees", employeeData);
 		newTr.append(`<td>${employeeData.avg_score}</td>`);
-		newTr.append("<td><a style='cursor:pointer;color:green' class='apply-changes'>Apply</a></td>"); //still need to add button in div
-		newTr.append("<td><a style='cursor:pointer;color:red' class='delete-employee'>Delete</a></td>"); //still need to add button in div
+		newTr.append(
+			"<td><a style='cursor:pointer;color:green' class='apply-changes'>Apply</a></td>"
+		); //still need to add button in div
+		newTr.append(
+			"<td><a style='cursor:pointer;color:red' class='delete-employee'>Delete</a></td>"
+		); //still need to add button in div
 
 		return newTr;
 	}
@@ -139,10 +143,10 @@ $(document).ready(function () {
 	function getEmployees() {
 		let empData;
 		let rowsToAdd = [];
-		$.get("api/employees", function (data) {
+		$.get("api/employees", function(data) {
 			empData = data;
-		}).then(function (empData) {
-			$.get("api/role", function (roles) {
+		}).then(function(empData) {
+			$.get("api/role", function(roles) {
 				for (var i = 0; i < empData.length; i++) {
 					rowsToAdd.push(createEmployeeRow(empData[i], roles));
 				}
@@ -180,14 +184,27 @@ $(document).ready(function () {
 	}
 
 	function handleApplyChanges(post) {
+		let thisRole = $(this)
+			.parent("td")
+			.parent("tr")
+			.children("td")
+			.children("select")
+			.find(":selected")
+			.attr("value");
+		let listItemData = $(this)
+			.parent("td")
+			.parent("tr")
+			.data("employees");
+		let id = listItemData.id;
 		$.ajax({
 			method: "PUT",
-			url: "/api/role",
-			data: post
-		}).then(function () {
-			window.location.href = "/manager"
+			url: "/api/employees",
+			data: {
+				id: id,
+				role_id: thisRole
+			}
+		}).then(function(err) {
+			console.log(err);
 		});
 	}
-
-
 });
