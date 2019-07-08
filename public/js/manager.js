@@ -197,14 +197,15 @@ $(document).ready(function() {
 		let id = listItemData.id;
 		let request = {};
 		request.id = id;
-		request.role_id = thisRole;
+		request.role_id = parseInt(thisRole);
 		console.log(request);
 		$.ajax({
 			method: "PUT",
 			url: "/api/employees",
-			data: request
-		}).then(function(dat) {
-			console.log(dat);
+			data: request,
+			success: function(result) {
+				console.log(result);
+			}
 		});
 	}
 });
