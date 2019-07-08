@@ -17,14 +17,14 @@ module.exports = function(sequelize, DataTypes) {
         // A Job_Skill must belong to a Role (and can exist for other Roles), and it must have a Skill_data
         // that can exist for other Job_skills or other Emp_skills
         Job_skills.belongsTo(models.Role, {
-            foreignKey: "id",
+            foreignKey: "role_id",
             //as: "role_id",
             allowNull: false
         });
 
         Job_skills.belongsTo(models.Skill_crap, {
-            foreignKey: "id",
-            //as: "skill_crap_id",
+            foreignKey: "skill_crap_id",
+            //as: "SkillCrapId",
             allowNull: false
         });
     };
