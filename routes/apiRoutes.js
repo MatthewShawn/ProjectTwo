@@ -133,14 +133,6 @@ module.exports = function(app) {
 			});
 	});
 
-	// find all the skill_data table entries
-	app.get("/api/skill_crap", function(req, res) {
-		console.log("Found the api/skill_crap api route.");
-		db.Skill_crap.findAll({}).then(function(dbSkill_crap) {
-			res.json(dbSkill_crap);
-		});
-	});
-
 	// Add and row to the role table
 	app.post("/api/role", function(req, res) {
 		db.Role.create({
