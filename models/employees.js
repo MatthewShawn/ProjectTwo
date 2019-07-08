@@ -45,9 +45,11 @@ module.exports = function(sequelize, DataTypes) {
         });
 
         // An Employee can have many Emp_skills.
-        Employees.hasMany(models.Emp_skills, {
-            onDelete: "cascade"
-        });
+        // done in the schema, and this is having a bad
+        // side effect that is killing us.
+        //Employees.hasMany(models.Emp_skills, {
+        //   onDelete: "cascade"
+        //});
     };
     // Creating a custom method for our Employees model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
     Employees.prototype.validPassword = function(password) {
