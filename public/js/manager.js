@@ -182,7 +182,7 @@ $(document).ready(function() {
 		}).then(getEmployees);
 	}
 
-	function handleApplyChanges(post) {
+	function handleApplyChanges() {
 		let thisRole = $(this)
 			.parent("td")
 			.parent("tr")
@@ -198,7 +198,6 @@ $(document).ready(function() {
 		let request = {};
 		request.id = id;
 		request.role_id = parseInt(thisRole);
-		console.log(request);
 		$.ajax({
 			method: "PUT",
 			url: "/api/employees",
