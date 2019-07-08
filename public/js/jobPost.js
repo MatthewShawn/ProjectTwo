@@ -36,7 +36,7 @@ const JobPost = Vue.component("JobPost", {
         <div class="col-auto">
               <label class="col-form-label">Salary Range</label>
         </div>
-        <div class="col-2">
+        <div class="col">
               <div class="input-group">
                 <div class="input-group-prepend">  
                   <span class="input-group-text">Low $</span>
@@ -44,7 +44,7 @@ const JobPost = Vue.component("JobPost", {
                 <input type="number" class="form-control" id="salary-low">
               </div>
         </div>
-        <div class="col-2">
+        <div class="col">
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">High $</span>
@@ -67,7 +67,7 @@ const JobPost = Vue.component("JobPost", {
 			let skillInput = `
       <div class="form-row pb-2 pt-2">
       <div class="col">
-      <label>Title</label>
+      <label>Skill</label>
       <input class="form-control s-title">
       </div>
       <div class="col-7">
@@ -75,7 +75,7 @@ const JobPost = Vue.component("JobPost", {
       <input class="form-control s-desc">
       </div>
       <div class="col-2">
-      <label>Min. Skill Lvl (1-10)</label>
+      <label>Min Proficiency (1-10)</label>
       <input class="form-control" type="number" id="prereq">
       </div>
       </div>
