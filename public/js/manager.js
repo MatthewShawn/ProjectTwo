@@ -64,7 +64,7 @@ const Vapp = new Vue({
 	methods: {}
 });
 //--------------------------- Refactor this to Vue methods ---------------
-$(document).ready(function() {
+$(document).ready(function () {
 	// This file just does a GET request to figure out which user is logged in
 	// and updates the HTML on the page
 	let employeeNameInput = $("#employee-name");
@@ -77,6 +77,8 @@ $(document).ready(function() {
 	$(document).on("submit", "#employee-form", handleEmployeeFormSubmit);
 	$(document).on("click", ".delete-employee", handleDeleteButtonPress);
 	$(document).on("click", ".apply-changes", handleApplyChanges);
+
+
 	//listing all employees
 	getEmployees();
 	//function when form is submitted.
@@ -85,9 +87,9 @@ $(document).ready(function() {
 
 		if (
 			!employeeNameInput
-				.val()
-				.trim()
-				.trim()
+			.val()
+			.trim()
+			.trim()
 		) {
 			return;
 		}
@@ -131,8 +133,8 @@ $(document).ready(function() {
 		}
 		newTr.append(
 			"<td><a href='/survey?employee_id=" +
-				employeeData.id +
-				"'>Create a Review</a></td>"
+			employeeData.id +
+			"'>Create a Review</a></td>"
 		);
 		newTr.data("employees", employeeData);
 		newTr.append(`<td>${employeeData.salary}</td>`);
@@ -152,10 +154,10 @@ $(document).ready(function() {
 	function getEmployees() {
 		let empData;
 		let rowsToAdd = [];
-		$.get("api/employees", function(data) {
+		$.get("api/employees", function (data) {
 			empData = data;
-		}).then(function(empData) {
-			$.get("api/role", function(roles) {
+		}).then(function (empData) {
+			$.get("api/role", function (roles) {
 				for (var i = 0; i < empData.length; i++) {
 					rowsToAdd.push(createEmployeeRow(empData[i], roles));
 				}
@@ -211,8 +213,9 @@ $(document).ready(function() {
 			method: "PUT",
 			url: "/api/employees",
 			data: request,
-			success: function(result) {
+			success: function (result) {
 				console.log(result);
+				window.location.href = '/manager'
 			}
 		});
 	}
