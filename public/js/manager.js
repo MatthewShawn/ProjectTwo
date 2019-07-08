@@ -198,6 +198,7 @@ $(document).ready(function() {
 		let request = {};
 		request.id = id;
 		request.role_id = thisRole;
+		console.log(request);
 		$.ajax({
 			method: "PUT",
 			url: "/api/employees",

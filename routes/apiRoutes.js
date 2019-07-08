@@ -293,13 +293,6 @@ module.exports = function(app) {
 		});
 	});
 
-	//start skeleton ----------------- (using employee database)
-	//get list of all employees
-	app.get("/api/employees", function(req, res) {
-		db.Employees.findAll({}).then(function(dbEmployees) {
-			res.json(dbEmployees);
-		});
-	});
 	//find one employee by specific id
 	app.get("/api/employees/:id", function(req, res) {
 		db.Employees.findOne({
