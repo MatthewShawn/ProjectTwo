@@ -182,7 +182,7 @@ $(document).ready(function() {
 		}).then(getEmployees);
 	}
 
-	function handleApplyChanges(post) {
+	function handleApplyChanges() {
 		let thisRole = $(this)
 			.parent("td")
 			.parent("tr")
@@ -197,14 +197,14 @@ $(document).ready(function() {
 		let id = listItemData.id;
 		let request = {};
 		request.id = id;
-		request.role_id = thisRole;
-		console.log(request);
+		request.role_id = parseInt(thisRole);
 		$.ajax({
 			method: "PUT",
 			url: "/api/employees",
-			data: request
-		}).then(function(dat) {
-			console.log(dat);
+			data: request,
+			success: function(result) {
+				console.log(result);
+			}
 		});
 	}
 });
