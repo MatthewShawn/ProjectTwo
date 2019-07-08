@@ -32,10 +32,9 @@ const survey = Vue.component("survey", {
             <hr>
 				<form id="review">
                     <div class="skill-container"></div>
-						<label for="comments">Comments:</label>
-						<textarea placeholder="Any additional feedback" class="form-control" rows="5" id="comments"></textarea>
+
 						<br>
-						<button type="submit" class="btn btn-success submit">Submit</button>
+						<button type="submit" form="review" class="btn btn-success submit">Submit</button>
                 </form>
 			</div>
 		</div>
@@ -44,7 +43,10 @@ const survey = Vue.component("survey", {
   data: {},
   methods: {}
 });
-
+{
+  /* <label for="comments">Comments:</label>
+<textarea placeholder="Any additional feedback" class="form-control" rows="5" id="comments"></textarea> */
+}
 const Vapp = new Vue({
   el: "#app",
   data: {},
@@ -58,21 +60,46 @@ $(document).ready(function() {
   var roleID;
   var newDiv = $("<div>");
   var skillContainer = $(".skill-container");
-  $(document).on("submit", "#review", handleReviewFormSubmit);
+  var numForms;
+  var reviewerID;
+  var skillCrapIDArray = [];
 
-  function handleReviewFormSubmit(event) {
+  // once the form is properly filled out, the form will submit
+  $(".submit").click(function(event) {
     event.preventDefault();
-
-    if (!comments.val().trim()) {
-      return;
+    for (var i = 0; i < numForms; i++) {
+      addReview(
+        $("#rating" + i)
+          .val()
+          .trim(),
+        i
+      );
     }
-    addReview({
-      text: comments.val().trim()
-    });
+  });
+
+  //on page load, generates the review of the employee
+  function renderPage() {
+    getEmployeeName(employeeID);
+    getReviewerID();
   }
 
-  function addReview(employeeData) {
-    $.post("/api/employees", employeeData).then(getEmployees);
+  // creates an object from the review and posts it to the database
+  function addReview(reviewNum, skillCrapID) {
+    if (reviewNum > 0 && reviewNum < 11 && !isNaN(reviewNum)) {
+      console.log(reviewNum);
+      var newSkillReview = {
+        current_level: reviewNum,
+        employees_id: employeeID,
+        reviewer_id: reviewerID,
+        skill_crap_id: skillCrapIDArray[skillCrapID]
+      };
+      console.log(newSkillReview);
+      $.post("/api/emp_skills", newSkillReview).then(function(response) {
+        // window.location.href = "/members";
+      });
+    } else {
+      alert("Please fill all of the forms with numbers 1-10");
+    }
   }
 
   // display employee name for the review
@@ -80,10 +107,16 @@ $(document).ready(function() {
     $.get("/api/employees/" + employee).then(function(data) {
       $("#member-name").append(data.text);
       roleID = data.RoleId;
-      console.log("=====================================================");
-      console.log(roleID);
-      console.log("=====================================================");
       getRoleName(roleID);
+    });
+  }
+
+  // gets the ID of the reviewer
+  function getReviewerID() {
+    $.get("/api/employees_data").then(function(data) {
+      reviewerID = data.userData.id;
+      alert(reviewerID);
+      return reviewerID;
     });
   }
 
@@ -91,6 +124,7 @@ $(document).ready(function() {
   function getRoleName(role) {
     $.get("/api/role/" + role).then(function(data) {
       if (data) {
+        // displays the role of the user
         let roleTitle = data.r_title;
         $("#role-name").append(roleTitle);
         getSkills(roleID);
@@ -103,29 +137,32 @@ $(document).ready(function() {
   //   retrieve skills
   function getSkills(role) {
     $.get("/api/role_skill_crap/" + role, function(data) {
-      console.log("=====================================================");
-      console.log(data);
-      console.log("=====================================================");
       let skillsToAdd = [];
+      numForms = data.length;
       for (var i = 0; i < data.length; i++) {
-        skillsToAdd.push(createSkillRow(data[i]));
+        skillsToAdd.push(createSkillRow(data[i], i));
       }
       skillContainer.append(skillsToAdd);
+      console.log(skillsToAdd);
     });
   }
 
-  function createSkillRow(roleData) {
+  // dynamically displays the content of the page
+  function createSkillRow(roleData, num) {
     if (roleData.Skill_crap) {
+      //pushes the skill id into an array for later
+      skillCrapIDArray.push(roleData.Skill_crap.id);
       newDiv.data("Skill_crap", roleData);
       newDiv.append(`<h2>${roleData.Skill_crap.d_title}</h2>`);
       newDiv.append(`<h3>${roleData.Skill_crap.d_desc}</h3>`);
       newDiv.append(`<label for="rating">Lowest Score Needed: ${roleData.min_level_required}</label>
-      <input type="text" class="form-control" id="rating" placeholder="Enter score 0-10">`);
+      <input type="text" class="form-control" id="rating${num}" placeholder="Enter score 1-10">`);
     } else {
       newDiv.append(`<p>No Role Assigned</p>`);
     }
     newDiv.append("<br>");
     return newDiv;
   }
-  getEmployeeName(employeeID);
+
+  renderPage();
 });
