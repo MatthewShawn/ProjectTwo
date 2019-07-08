@@ -181,6 +181,16 @@ module.exports = function(app) {
 			});
 	});
 
+	app.get("/api/emp_skills/:id", function(req, res) {
+		db.Emp_skills.findAll({
+			where: {
+				employees_id: req.params.id
+			}
+		}).then(function(dbEmployees) {
+			res.json(dbEmployees);
+		});
+	});
+
 	// Route for logging employees out
 	app.get("/logout", function(req, res) {
 		req.logout();
