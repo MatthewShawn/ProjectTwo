@@ -378,13 +378,14 @@ module.exports = function(app) {
 	});
 	//update current employees
 	app.put("/api/employees", function(req, res) {
+		console.log("PUT REQUEST MADE");
 		db.Employees.update(
 			{
-				text: req.body.text,
-				//password: req.body.password,
-				salary: req.body.salary,
-				avg_score: req.body.avg_score,
-				is_manager: req.body.is_manager,
+				// text: req.body.text,
+				// //password: req.body.password,
+				// salary: req.body.salary,
+				// avg_score: req.body.avg_score,
+				// is_manager: req.body.is_manager,
 				role_id: req.body.role_id
 			},
 			{

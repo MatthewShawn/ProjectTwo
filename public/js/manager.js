@@ -195,13 +195,13 @@ $(document).ready(function() {
 			.parent("tr")
 			.data("employees");
 		let id = listItemData.id;
+		let request = {};
+		request.id = id;
+		request.role_id = thisRole;
 		$.ajax({
 			method: "PUT",
 			url: "/api/employees",
-			data: {
-				id: id,
-				role_id: thisRole
-			}
+			data: request
 		}).then(function(dat) {
 			console.log(dat);
 		});
