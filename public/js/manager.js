@@ -35,7 +35,7 @@ const Welcome = Vue.component("Welcome", {
         <thead>
           <tr>
 						<th>Name</th>
-            <th>Edit Role Info</th>
+         			   <th>Edit Role Info</th>
 						<th>Current Role</th>
 						<th>Review</th>
 						<th>Salary</th>
@@ -64,7 +64,7 @@ const Vapp = new Vue({
 	methods: {}
 });
 //--------------------------- Refactor this to Vue methods ---------------
-$(document).ready(function () {
+$(document).ready(function() {
 	// This file just does a GET request to figure out which user is logged in
 	// and updates the HTML on the page
 	let employeeNameInput = $("#employee-name");
@@ -85,9 +85,9 @@ $(document).ready(function () {
 
 		if (
 			!employeeNameInput
-			.val()
-			.trim()
-			.trim()
+				.val()
+				.trim()
+				.trim()
 		) {
 			return;
 		}
@@ -103,13 +103,19 @@ $(document).ready(function () {
 
 	//new list row for employees
 	function createEmployeeRow(employeeData, roles) {
+		var newTr = $("<tr>");
+		let roleId = employeeData.role_id;
+		let roleName = "";
 		let optionsArray = [];
 		for (let i = 0; i < roles.length; i++) {
+			//check which role the employee has
+			if (roleId === roles[i].id) {
+				roleName = roles[i].r_title;
+			}
 			optionsArray.push(
 				`<option value=${roles[i].id}>${roles[i].r_title}</option>`
 			);
 		}
-		var newTr = $("<tr>");
 		newTr.data("employees", employeeData); //could be employee(s)
 		newTr.append(`<td>${employeeData.text}</td>`);
 		if (employeeData.Employees) {
@@ -119,14 +125,14 @@ $(document).ready(function () {
 				`<td><select id="first-choice">
 			<option selected value="base">Please Select</option>` + optionsArray.toString()
 			);
-			newTr.append(`<td>${employeeData.role_id}</td>`);
-			console.log(employeeRole);
+			newTr.append(`<td>${roleName}</td>`);
+			console.log(roleName);
 			newTr.append("</select></td>");
 		}
 		newTr.append(
 			"<td><a href='/survey?employee_id=" +
-			employeeData.id +
-			"'>Create a Review</a></td>"
+				employeeData.id +
+				"'>Create a Review</a></td>"
 		);
 		newTr.data("employees", employeeData);
 		newTr.append(`<td>${employeeData.salary}</td>`);
@@ -146,10 +152,10 @@ $(document).ready(function () {
 	function getEmployees() {
 		let empData;
 		let rowsToAdd = [];
-		$.get("api/employees", function (data) {
+		$.get("api/employees", function(data) {
 			empData = data;
-		}).then(function (empData) {
-			$.get("api/role", function (roles) {
+		}).then(function(empData) {
+			$.get("api/role", function(roles) {
 				for (var i = 0; i < empData.length; i++) {
 					rowsToAdd.push(createEmployeeRow(empData[i], roles));
 				}
@@ -205,7 +211,7 @@ $(document).ready(function () {
 			method: "PUT",
 			url: "/api/employees",
 			data: request,
-			success: function (result) {
+			success: function(result) {
 				console.log(result);
 			}
 		});
