@@ -140,8 +140,8 @@ module.exports = function(app) {
 			salary_low: req.body.salary_low,
 			salary_high: req.body.salary_high
 		})
-			.then(function() {
-				res.json({});
+			.then(function(data) {
+				res.json({ data });
 			})
 			.catch(function(err) {
 				res.status(401).json(err);
