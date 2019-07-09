@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS perf_review;
-CREATE DATABASE perf_review;
+DROP DATABASE IF EXISTS sfw7ofbm798lm5df;
+CREATE DATABASE sfw7ofbm798lm5df;
 
-use perf_review;
+use sfw7ofbm798lm5df;
 
 create table role (
 id integer not null auto_increment,
